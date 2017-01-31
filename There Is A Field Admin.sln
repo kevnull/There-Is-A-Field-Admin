@@ -1,0 +1,26 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2015
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "There Is A Field Admin", "There Is A Field Admin.csproj", "{0F9BF604-2376-35D0-6DC4-C5DEDCB2ECCA}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "There Is A Field Admin.Editor", "There Is A Field Admin.Editor.csproj", "{2027CA4D-1744-176D-896F-1D7B30244917}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{0F9BF604-2376-35D0-6DC4-C5DEDCB2ECCA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0F9BF604-2376-35D0-6DC4-C5DEDCB2ECCA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0F9BF604-2376-35D0-6DC4-C5DEDCB2ECCA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0F9BF604-2376-35D0-6DC4-C5DEDCB2ECCA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2027CA4D-1744-176D-896F-1D7B30244917}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2027CA4D-1744-176D-896F-1D7B30244917}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2027CA4D-1744-176D-896F-1D7B30244917}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2027CA4D-1744-176D-896F-1D7B30244917}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
