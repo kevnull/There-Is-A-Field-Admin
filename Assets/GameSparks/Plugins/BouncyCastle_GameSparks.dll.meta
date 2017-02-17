@@ -58,13 +58,13 @@ PluginImporter:
       settings:
         CPU: AnyCPU
     WindowsStoreApps:
-      enabled: 1
+      enabled: 0
       settings:
         CPU: AnyCPU
         DontProcess: False
         PlaceholderPath: 
-        SDK: UWP
-        ScriptingBackend: Il2Cpp
+        SDK: AnySDK
+        ScriptingBackend: AnyScriptingBackend
     XboxOne:
       enabled: 1
       settings: {}

@@ -1,8 +1,7 @@
 fileFormatVersion: 2
-guid: 9faf7dab4ad1445b1aa93ef0c912606e
-folderAsset: yes
-timeCreated: 1448011066
-licenseType: Free
+guid: d4aa343e31277cd45b2c3096d3318b90
+timeCreated: 1457668425
+licenseType: Store
 PluginImporter:
   serializedVersion: 1
   iconMap: {}
@@ -19,45 +18,54 @@ PluginImporter:
     Editor:
       enabled: 0
       settings:
-        CPU: AnyCPU
+        CPU: x86_64
         DefaultValueInitialized: true
         OS: AnyOS
     Linux:
-      enabled: 0
+      enabled: 1
       settings:
-        CPU: x86
+        CPU: None
     Linux64:
-      enabled: 0
+      enabled: 1
       settings:
         CPU: x86_64
     LinuxUniversal:
-      enabled: 0
+      enabled: 1
       settings:
-        CPU: AnyCPU
+        CPU: x86_64
     OSXIntel:
       enabled: 1
       settings:
-        CPU: AnyCPU
+        CPU: None
     OSXIntel64:
       enabled: 1
       settings:
-        CPU: AnyCPU
+        CPU: None
     OSXUniversal:
       enabled: 1
       settings:
-        CPU: AnyCPU
-    SamsungTV:
+        CPU: None
+    WP8:
       enabled: 0
       settings:
-        STV_MODEL: STANDARD_13
+        CPU: AnyCPU
+        DontProcess: False
+        PlaceholderPath: 
     Win:
-      enabled: 0
+      enabled: 1
       settings:
-        CPU: AnyCPU
+        CPU: None
     Win64:
+      enabled: 1
+      settings:
+        CPU: AnyCPU
+    WindowsStoreApps:
       enabled: 0
       settings:
         CPU: AnyCPU
+        DontProcess: False
+        PlaceholderPath: 
+        SDK: AnySDK
     iOS:
       enabled: 0
       settings:

@@ -23,19 +23,20 @@ namespace GameSparks.Platforms
 			DeviceName = SystemInfo.deviceName.ToString();
 			DeviceType = SystemInfo.deviceType.ToString();
 			DeviceId = SystemInfo.deviceUniqueIdentifier.ToString();
-			#if !GS_DONT_USE_PLAYER_PREFS
-			AuthToken = PlayerPrefs.GetString(PLAYER_PREF_AUTHTOKEN_KEY);
+            #if !GS_DONT_USE_PLAYER_PREFS
+            AuthToken = PlayerPrefs.GetString(PLAYER_PREF_AUTHTOKEN_KEY);
 			UserId = PlayerPrefs.GetString(PLAYER_PREF_USERID_KEY);
-			#endif
-			Platform = Application.platform.ToString();
+            #endif
+            Platform = Application.platform.ToString();
 			ExtraDebug = GameSparksSettings.DebugBuild;
-
-			#if !UNITY_WEBPLAYER
+			ServiceUrl = GameSparksSettings.ServiceUrl;
+			GameSparksSecret = GameSparksSettings.ApiSecret;
+#if !UNITY_WEBPLAYER
 			PersistentDataPath = Application.persistentDataPath;
-			#endif
+#endif
 			RequestTimeoutSeconds = 10;
 
-			GS.Initialise(this);
+            GS.Initialise(this);
 
 			DontDestroyOnLoad (this);
 
@@ -56,47 +57,37 @@ namespace GameSparks.Platforms
 
 			lock (_actions)
 			{
-				if (_actions.Count > 0) {
-					_currentActions.AddRange (_actions);
-					_actions.Clear ();
+				_currentActions.AddRange(_actions);
+				_actions.Clear();
+			}
+			foreach(var a in _currentActions)
+			{
+				if(a != null)
+				{
+					a();
 				}
 			}
-			var count = _currentActions.Count;
 
-			if (count > 0) {
-				for (var index = 0; index < count; ++index) {
-					var a = _currentActions [index];
-					if (a != null) {
-						a ();
-					}
-				}
+			_currentActions.Clear();
 
-				_currentActions.Clear ();
-			}
 		}
 
 		virtual protected void OnApplicationPause(bool paused)
 		{
 			if(paused)
 			{
-				#if UNITY_EDITOR
+				//#if UNITY_EDITOR
 				GS.Disconnect();
-				#endif
+				//#endif
 			}
 			else
 			{
-				try{
-					GS.Reconnect();
-				}catch(Exception e) {
-					if(ExceptionReporter != null) {
-						ExceptionReporter(e);
-					}
-				}
+				GS.Reconnect();
 			}
 		}
 
 		virtual protected void OnApplicationQuit(){
-			GS.Disconnect();
+            GS.Disconnect();
 		}
 
 		virtual protected void OnDestroy () {
@@ -106,21 +97,21 @@ namespace GameSparks.Platforms
 
 		public String DeviceOS {
 			get{
-				#if UNITY_IOS
-				return "IOS";
-				#elif UNITY_TVOS
-				return "TVOS";
-				#elif UNITY_ANDROID
-				return "ANDROID";
-				#elif UNITY_METRO
-				return "W8";
-				#elif UNITY_PS4
-				return "PS4";
-				#elif UNITY_XBOXONE
-				return "XBOXONE";
-				#else
-				return "WP8";
-				#endif
+                #if UNITY_IOS
+                return "IOS";
+                #elif UNITY_TVOS
+                return "TVOS";
+                #elif UNITY_ANDROID
+                return "ANDROID";
+                #elif UNITY_METRO
+                return "W8";
+                #elif UNITY_PS4
+                return "PS4";
+                #elif UNITY_XBOXONE
+                return "XBOXONE";
+                #else
+                return "WP8";
+                #endif
 			}
 		}
 
@@ -134,27 +125,16 @@ namespace GameSparks.Platforms
 		/// </summary>
 		public bool ExtraDebug {get; private set;}
 
-		public string ApiKey { get {
-				return GameSparksSettings.ApiKey;
-			}
-		}
+		/// <summary>
+		/// The service URL GameSparks connects to. To set it use the GameSparksSettings editor window. <see cref="GameSparksSettings.DebugBuild"/>
+		/// </summary>
+		/// <value>The service URL.</value>
+		public String ServiceUrl  {get; private set;}
 
-		public string ApiSecret { get {
-				return GameSparksSettings.ApiSecret;
-			}
-		}
-
-		public string ApiCredential { get {
-				return GameSparksSettings.Credential;
-			}
-		}
-
-		public string ApiStage { get {
-				return GameSparksSettings.PreviewBuild ? "preview" : "live";
-			}
-		}
-
-		public String ApiDomain { get { return null; } }
+		/// <summary>
+		/// The Api secret. The Api secret can be obtained from the GameSparks Developer Portal and is game specific. To set it use the GameSparksSettings editor window.
+		/// </summary>
+		public String GameSparksSecret  {get; private set;}
 
 		public int RequestTimeoutSeconds  {get; set;}
 		public String PersistentDataPath{get; private set;}
@@ -164,15 +144,15 @@ namespace GameSparks.Platforms
 		/// Logs the given string to the Unity debug console.
 		/// </summary>
 		public void DebugMsg(String message){
-			ExecuteOnMainThread(() => {
-				if (message.Length < 1500)
-				{
-					Debug.Log("GS: " + message);
-				} else
-				{
-					Debug.Log("GS: " + message.Substring(0, 1500) + "...");
-				}
-			});
+            ExecuteOnMainThread(() => {
+                if (message.Length < 1500)
+                {
+                    Debug.Log("GS: " + message);
+                } else
+                {
+                    Debug.Log("GS: " + message.Substring(0, 1500) + "...");
+                }
+            });
 		}
 
 		public String SDK{get;set;}
@@ -183,9 +163,9 @@ namespace GameSparks.Platforms
 			get {return m_authToken;}
 			set {
 				m_authToken = value;
-				#if !GS_DONT_USE_PLAYER_PREFS
-				PlayerPrefs.SetString(PLAYER_PREF_AUTHTOKEN_KEY, value);
-				#endif
+                #if !GS_DONT_USE_PLAYER_PREFS
+                PlayerPrefs.SetString(PLAYER_PREF_AUTHTOKEN_KEY, value);
+                #endif
 			}
 		}
 
@@ -195,15 +175,10 @@ namespace GameSparks.Platforms
 			get {return m_userId;}
 			set {
 				m_userId = value;
-				#if !GS_DONT_USE_PLAYER_PREFS
-				PlayerPrefs.SetString(PLAYER_PREF_USERID_KEY, value);
-				#endif
+                #if !GS_DONT_USE_PLAYER_PREFS
+                PlayerPrefs.SetString(PLAYER_PREF_USERID_KEY, value);
+                #endif
 			}
-		}
-
-		public Action<Exception> ExceptionReporter {
-			get;
-			set;
 		}
 
 		/// <summary>
